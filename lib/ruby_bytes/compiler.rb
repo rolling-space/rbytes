@@ -28,6 +28,15 @@ module RubyBytes
   ], trim_mode: "<>").result(binding))
     end
 
+    def verbatim(path)
+      contents = File.read(resolve_path(path))
+      %(
+  <<~'TCODE'
+#{contents}
+  TCODE
+  )
+    end
+
     def include(path, indent: 0)
       indented(render(File.read(resolve_path(path))), indent)
     end
